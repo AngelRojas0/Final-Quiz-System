@@ -5,12 +5,8 @@ require_role('student');
 $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
 $message = '';
 
-
-// Make sure this is AFTER session_start() and database.php inclusion
-
-// =================================================================
 // 1. MARK NOTIFICATIONS AS READ LOGIC (Action Handler)
-// =================================================================
+
 if (isset($_GET['action']) && $_GET['action'] === 'mark_read' && isset($_GET['ids']) && !empty($_GET['ids'])) {
     // Sanitize the IDs string: ensures it only contains numbers and commas
     $ids_string = preg_replace('/[^0-9,]/', '', $_GET['ids']);
@@ -40,12 +36,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'mark_read' && isset($_GET['id
     header("Location: student_dashboard.php");
     exit();
 }
-// =================================================================
-// =================================================================
-// ... rest of your PHP setup (like notification fetching) continues here
-// --- END NEW LOGIC ---
 
-// --- NEW LOGIC: Handle Join Code Submission ---
+
+// Handle Join Code Submission 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'join_quiz') {
     $join_code = trim(strtoupper($_POST['join_code'] ?? ''));
     
@@ -64,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
     }
 }
-// ... (Code ends after handling join quiz POST request)
+// (Code ends after handling join quiz POST request)
 
-// =================================================================
+
 // 2. FETCH UNREAD NOTIFICATIONS LOGIC
-// =================================================================
+
 $notifications = []; 
 try {
     // CRITICAL: This query must match the WHERE clause logic of the mark_read action
@@ -89,12 +82,12 @@ try {
 
 $notification_count = count($notifications);
 
-// =================================================================
+
 
 // CRITICAL FIX: Only show ACTIVE AND PUBLIC quizzes (where join_code is NULL)
 $quizzes = $pdo->query("SELECT * FROM quizzes WHERE is_active = 1 AND join_code IS NULL")->fetchAll();
 
-// --- Ranking Logic (Top 10) ---
+// Ranking Logic (Top 10)
 // This query uses the duration_seconds calculated from the fixed database schema
 $ranking = []; 
 try {
@@ -117,7 +110,7 @@ try {
 }
 
 
-// --- Printables Logic: Find quizzes student has finished ---
+//Printables Logic: Find quizzes student has finished 
 $completed_quizzes = [];
 try {
     $completed_quizzes_stmt = $pdo->prepare("
@@ -130,7 +123,7 @@ try {
     $completed_quizzes_stmt->execute([$user_id]);
     $completed_quizzes = $completed_quizzes_stmt->fetchAll();
 } catch (PDOException $e) {
-    // In a real app, you'd log this error.
+   
 }
 
 
@@ -185,7 +178,7 @@ if (isset($_SESSION['quiz_submitted']) && $_SESSION['quiz_submitted']) {
 <style>
         /* Keep the rest of your styles and add/update these */
         
-        /* --- NEW HEADER & ICON STYLES --- */
+        /* HEADER & ICON STYLES */
         .header {
             display: flex;
             justify-content: space-between;
@@ -198,7 +191,7 @@ if (isset($_SESSION['quiz_submitted']) && $_SESSION['quiz_submitted']) {
             gap: 15px; 
         }
 
-        /* New: Container for the dropdown */
+        /* Container for the dropdown */
         .notification-container {
             position: relative; /* Essential for positioning the dropdown content */
         }
@@ -233,7 +226,7 @@ if (isset($_SESSION['quiz_submitted']) && $_SESSION['quiz_submitted']) {
             box-shadow: 0 0 0 2px white;
         }
 
-        /* NEW: Dropdown Styling */
+        /* Dropdown Styling */
         .notification-dropdown-content {
             display: none; /* CRUCIAL: Hidden by default */
             position: absolute;
@@ -297,7 +290,7 @@ if (isset($_SESSION['quiz_submitted']) && $_SESSION['quiz_submitted']) {
         }
 
         
-        /* --- NEW QUIZ CARD STYLES --- */
+        /*NEW QUIZ CARD STYLES*/
         .quiz-card-list {
             display: flex;
             flex-direction: column;
