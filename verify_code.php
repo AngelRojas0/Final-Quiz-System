@@ -1,5 +1,4 @@
 <?php
-// verify_code.php
 
 require_once 'config.php';
 
@@ -42,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $pdo->commit();
 
-                // Success! Redirect to login page
+                //Redirect to login page
                 $message = 'Email verification successful! You can now log in.';
                 redirect('login.php?message=' . urlencode($message));
                 
