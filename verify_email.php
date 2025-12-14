@@ -190,7 +190,7 @@ class EmailVerification
         // create a random pin to send to the gmail
         $pinCode = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
-        // PHPMailer is now available because it was included in the calling script (e.g., register.php)
+        // PHPMailer is now available because it was included in the calling script (register.php)
         $mail = new PHPMailer(true);
         $mail->SMTPDebug = 0; // Show errors and server responses
         $mail->Debugoutput = 'html'; // Display in a user-friendly format
@@ -200,8 +200,8 @@ class EmailVerification
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com'; // free host domain with 500 below limit sends
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'leonardaragoncillo2@gmail.com';      // Gmail address
-        $mail->Password   = 'anuz thcb btfz qcop';          // App password (not regular password!)
+        $mail->Username   = 'angelnicole331203@gmail.com';    
+        $mail->Password   = 'hgob twck fyvq xoqy';          
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
 
@@ -214,7 +214,7 @@ class EmailVerification
         );
 
         // Recipients
-        $mail->setFrom('leonardaragoncillo2@gmail.com', 'quiz_data');
+        $mail->setFrom('angelnicole331203@gmail.com', 'quiz_data');
         $mail->addAddress($to_gmail, $full_name);
 
         // Content
@@ -229,9 +229,9 @@ class EmailVerification
         $mail->send();
         // Once the email is successfully sent, you will see a success message in the debug output.
     } catch (Exception $e) {
-        // ...
+        
         // If it fails, the debug output will show the exact reason from the server before the exception is caught.
-        // ...
+      
     }
     }
 }
