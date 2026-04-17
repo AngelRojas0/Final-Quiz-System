@@ -61,31 +61,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Code - Quiz System</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="center-page">
     <div class="container">
-        <h1>🔐 Enter Verification Code</h1>
-        <p>A 6-digit PIN has been sent to **<?php echo e($email); ?>**.</p>
-        
-        <?php if ($error): ?><div class="msg err"><?php echo e($error); ?></div><?php endif; ?>
-        <?php if ($message): ?><div class="msg success"><?php echo e($message); ?></div><?php endif; ?>
+        <div class="card">
+            <h1>🔐 Verify Email</h1>
+            <p>Check <?php echo e($email); ?> for your 6-digit PIN</p>
+            
+            <?php if ($error): ?><div class="msg err"><?php echo e($error); ?></div><?php endif; ?>
+            <?php if ($message): ?><div class="msg success"><?php echo e($message); ?></div><?php endif; ?>
 
-        <form method="post">
-            <input type="hidden" name="email" value="<?php echo e($email); ?>">
-            <label>Verification PIN
-                <input type="text" name="pin_code" required maxlength="6">
-            </label>
+            <form method="post">
+                <input type="hidden" name="email" value="<?php echo e($email); ?>">
+                <div class="form-group">
+                    <label for="pin_code">Verification PIN</label>
+                    <input type="text" id="pin_code" name="pin_code" required maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 0.5rem;">
+                </div>
+                
+                <button type="submit" class="button primary full-width">Verify & Activate</button>
+            </form>
             
             <div class="actions">
-                <button type="submit" class="button success">Verify Account</button>
+                <a href="register.php" class="button secondary full-width">Back to Register</a>
             </div>
-            
-            <p style="text-align: center; margin-top: 15px;">
-                <a href="register.php">Re-send Code or Register New Account</a>
-            </p>
-        </form>
+        </div>
     </div>
 </body>
 </html>
