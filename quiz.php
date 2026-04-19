@@ -28,8 +28,8 @@ if (!$quiz_data) {
 }
 
 // Check for existing unfinished attempt or start new one
-$result_stmt = $pdo->prepare("SELECT * FROM results WHERE user_id = ? AND quiz_id = ? AND is_finished = 0");
-$result_stmt->execute([$user_id, $quiz_id]);
+$result_stmt = $pdo->prepare("SELECT * FROM results WHERE user_id = ?");
+$result_stmt->execute([$_SESSION['user_id']]);
 $current_result = $result_stmt->fetch();
 
 if (!$current_result) {
