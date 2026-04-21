@@ -102,34 +102,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Register - Quiz System</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+    function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
+        const toggle = field.nextElementSibling;
+        if (field.type === 'password') {
+            field.type = 'text';
+            toggle.innerHTML = '✖';
+        } else {
+            field.type = 'password';
+            toggle.innerHTML = '👁';
+        }
+    }
+    </script>
 </head>
 <body class="center-page">
     <div class="container">
-        <h1>📝 Register</h1>
-        
-        <?php if ($error): ?><div class="msg err"><?php echo e($error); ?></div><?php endif; ?>
-        <?php if ($message): ?><div class="msg success"><?php echo e($message); ?></div><?php endif; ?>
+        <div class="card">
+            <h1>📝 Join Quiz System</h1>
+            <p>Create your account to start learning.</p>
+            
+            <?php if ($error): ?><div class="msg err"><?php echo e($error); ?></div><?php endif; ?>
+            <?php if ($message): ?><div class="msg success"><?php echo e($message); ?></div><?php endif; ?>
 
-        <form method="post">
-            <label>First Name <input type="text" name="first_name" required></label>
-            <label>Last Name <input type="text" name="last_name" required></label>
-            <label>Email Address <input type="email" name="email" required></label>
-            <label>Password <input type="password" name="password" required></label>
-            <label>Role
-                <select name="role">
-                    <option value="student">Student</option>
-                    <option value="admin">Admin (Teacher)</option>
-                </select>
-            </label>
-            
+            <form method="post">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+<div class="password-field" style="position: relative;">
+                        <input type="password" id="password" name="password" required minlength="6" style="padding-right: 40px;">
+                        <button type="button" class="password-toggle" onclick="togglePassword('password')" tabindex="-1">👁</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" name="role">
+                        <option value="student">Student</option>
+                        <option value="admin">Admin (Teacher)</option>
+                    </select>
+                </div>
+                
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button type="submit" class="button primary small">Create Account</button>
+                </div>
+            </form>
             <div class="actions">
-                <button type="submit" class="button success">Register</button>
+                <a href="login.php" class="button secondary full-width">Have account? Sign in</a>
             </div>
-            
-            <p style="text-align: center; margin-top: 15px;">
-                Already have an account? <a href="login.php">Login here</a>.
-            </p>
-        </form>
+        </div>
     </div>
 </body>
 </html>

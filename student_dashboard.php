@@ -172,191 +172,19 @@ if (isset($_SESSION['quiz_submitted']) && $_SESSION['quiz_submitted']) {
 <head>
     <meta charset="UTF-8">
     <title>Student Dashboard - Quiz System</title>
-    <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<style>
-        /* Keep the rest of your styles and add/update these */
-        
-        /* HEADER & ICON STYLES */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 1;
-        }
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px; 
-        }
-
-        /* Container for the dropdown */
-        .notification-container {
-            position: relative; /* Essential for positioning the dropdown content */
-        }
-
-        /* Icon Button Styles */
-        .notification-icon-button {
-            position: relative;
-            font-size: 1.5em; 
-            color: #333; /* Always visible color */
-            text-decoration: none;
-            padding: 5px;
-            transition: color 0.2s;
-        }
-        .notification-icon-button:hover {
-            color: #007bff;
-        }
-
-        /* Red Badge Styles */
-        .notification-badge {
-            position: absolute;
-            top: 0px; 
-            right: -5px; 
-            background-color: #dc3545; 
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.55em; 
-            font-weight: bold;
-            line-height: 1;
-            min-width: 18px;
-            text-align: center;
-            box-shadow: 0 0 0 2px white;
-        }
-
-        /* Dropdown Styling */
-        .notification-dropdown-content {
-            display: none; /* CRUCIAL: Hidden by default */
-            position: absolute;
-            right: 0;
-            top: 40px; 
-            background-color: #f9f9f9;
-            min-width: 300px;
-            max-height: 400px;
-            overflow-y: auto;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 10;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-
-        .notification-dropdown-content h3 {
-            margin-top: 0;
-            font-size: 1.1em;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #eee;
-            color: #333;
-        }
-
-        .notification-dropdown-content .notification-item {
-            border-bottom: 1px dashed #e9e9e9;
-            padding: 10px 0;
-            font-size: 0.9em;
-        }
-        .notification-dropdown-content .notification-item:last-child {
-            border-bottom: none;
-        }
-        .notification-dropdown-content .no-announcements {
-            padding: 15px 0;
-            text-align: center;
-            color: #6c757d;
-        }
-
-        /* Mark Read Button Style */
-        .mark-read-area {
-            text-align: center;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
-        }
-        .mark-all-read-btn {
-            display: inline-block;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 0.9em;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.2s;
-        }
-        .mark-all-read-btn:hover {
-            background-color: #e9ecef;
-        }
-
-        /* Class toggled by JavaScript */
-        .show {
-    display: block !important; /* Use !important temporarily if necessary to force override */
-        }
-
-        
-        /*NEW QUIZ CARD STYLES*/
-        .quiz-card-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* Spacing between cards */
-            padding: 0;
-        }
-        .quiz-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            border-radius: 8px;
-            text-decoration: none; /* Remove underline from the <a> tag */
-            color: #333;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-            cursor: pointer;
-            background-color: #f7f7f7; 
-            border-left: 5px solid #ccc; /* Generic border for effect */
-        }
-        .quiz-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            opacity: 0.95;
-        }
-        .quiz-card .quiz-info {
-            display: flex;
-            align-items: center;
-            flex-grow: 1;
-        }
-        .quiz-card .quiz-icon {
-            font-size: 1.5em;
-            margin-right: 15px;
-            color: inherit; 
-        }
-        .quiz-card strong {
-            display: block;
-            font-size: 1.1em;
-            margin-bottom: 2px;
-        }
-        .quiz-card p {
-            margin: 0;
-            font-size: 0.9em;
-            color: #666;
-        }
-        .quiz-card .start-button {
-            /* This makes the 'Start Quiz' text inside the link look like a proper button */
-            padding: 8px 15px;
-            border-radius: 4px;
-            margin-left: 15px;
-            white-space: nowrap;
-        }
-        
-        /* Subject Color Overrides (based on existing classes) */
-        .quiz-science { border-left-color: #4CAF50; background-color: #f1f8e9; } /* Green */
-        .quiz-art { border-left-color: #FF9800; background-color: #fff3e0; } /* Orange */
-        .quiz-history { border-left-color: #2196F3; background-color: #e3f2fd; } /* Blue */
-</style>
-<body>
-    <div class="header">
-    <h2>Welcome, <?php echo e($_SESSION['name']); ?>!</h2>
+<body class="student">
+<div class="header">
+    <div class="header-left">
+        <h2>Welcome, <?php echo e($_SESSION['name']); ?>!</h2>
+    </div>
     <div class="header-actions">
         <div class="notification-container">
-            <a href="#" id="notification-bell" class="notification-icon-button" title="Announcements">
+            <a href="#" id="notification-bell" class="notification-button" title="Announcements">
                 <i class="fas fa-bell"></i>
-                
                 <?php if ($notification_count > 0): ?>
                     <span class="notification-badge"><?php echo $notification_count; ?></span>
                 <?php endif; ?>
@@ -372,91 +200,76 @@ if (isset($_SESSION['quiz_submitted']) && $_SESSION['quiz_submitted']) {
                         </div>
                     <?php endforeach; ?>
                     <div class="mark-read-area">
-    <a href="?action=mark_read&ids=<?php echo implode(',', array_column($notifications, 'id')); ?>" class="mark-all-read-btn">Mark All As Read</a>
+<a href="?action=mark_read&ids=<?php echo implode(',', array_column($notifications, 'id')); ?>" class="mark-all-read-btn">Mark All As Read</a>
 </div>
                 <?php else: ?>
                     <div class="notification-item no-announcements">No new announcements.</div>
                 <?php endif; ?>
             </div>
         </div>
-        <a href="logout.php" class="button danger">Logout</a>
+        <a href="#" class="button danger logout-trigger" onclick="showLogoutModal(); return false;">Logout</a>
     </div>
 </div>
 
-    <?php if ($message): ?><div class="msg error"><?php echo e($message); ?></div><?php endif; ?>
+    <?php if ($message): ?><div class="msg err"><?php echo e($message); ?></div><?php endif; ?>
     
     <?php if ($display_quote_and_results): ?>
-    <div class="container wide" style="margin-top: 20px;">
-        <div class="score-card status-passed">
-            
-            <h2>Results for "<?php echo e($last_quiz_title); ?>"</h2>
-            
-            <p class="score-label">Your Score:</p>
-            <div class="score-display"><?php echo e($last_quiz_score); ?> / <?php echo e($last_quiz_total); ?></div> 
-            
-            <div class="result-status" style="background-color: #e0f2f1; color: #004d40; border: 1px solid #b2dfdb; font-style: italic; font-size: 1.2em;">
+    <div class="container wide">
+        <div class="card">
+            <h2>🎉 Quiz Results: "<?php echo e($last_quiz_title); ?>"</h2>
+            <div style="font-size: 3rem; color: var(--primary); text-align: center; margin: 1rem 0;">
+                <?php echo e($last_quiz_score); ?> / <?php echo e($last_quiz_total); ?>
+            </div>
+            <div class="msg success" style="font-style: italic; font-size: 1.1rem;">
                 "<?php echo e($random_quote); ?>"
             </div>
-            
             <?php if ($award_stars): ?>
-            <div class="congratulations-stars" style="text-align: center;">
-                <h3>Congratulations! You excelled!</h3>
-                <div class="star-rating" style="display: flex; justify-content: center; gap: 15px; font-size: 3em; color: gold; margin: 15px 0;">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
+            <div style="text-align: center; margin: 2rem 0;">
+                <h3>⭐ Excellent Work! ⭐</h3>
+                <div style="font-size: 4rem; color: gold;">★ ★ ★</div>
             </div>
             <?php endif; ?>
-            <div class="summary-details">
+            <div class="actions">
                 <a href="student_dashboard.php" class="button primary">Back to Dashboard</a>
             </div>
         </div>
     </div>
     <?php endif; ?>
     
-    <div class="container full-width"> 
+<div class="container wide">
         <div class="main-content-card">
-            
-            <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr 1fr;">
-                <div class="card quizzes-section">
-                    <h3>Available Public Quizzes</h3>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>📚 Available Quizzes</h3>
                     
-                    <div style="margin-bottom: 20px; padding: 15px; background-color: #f0f8ff; border: 1px solid #a8c8e1; border-radius: 5px;">
-                        <form method="post" class="inline-form" style="display: flex; gap: 10px; align-items: center;">
+                    <div class="card" style="background: #eff6ff; border-color: #93c5fd;">
+                        <form method="post" style="display: flex; gap: 1rem; align-items: center;">
                             <input type="hidden" name="action" value="join_quiz">
-                            <input type="text" name="join_code" placeholder="Enter Private Quiz Code" required style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                            <button type="submit" class="button success">Join Private Quiz</button>
+                            <input type="text" name="join_code" placeholder="Enter Private Quiz Code" style="flex: 1;">
+                            <button type="submit" class="button success">Join Quiz</button>
                         </form>
                     </div>
 
                     <?php if (empty($quizzes)): ?>
-                        <p>No active public quizzes available right now. Ask your admin for a private quiz code if necessary.</p>
+                        <p class="msg">No public quizzes available. Ask for a private code!</p>
                     <?php else: ?>
                         <ul class="quiz-list-colorful">
                             <?php foreach ($quizzes as $quiz): ?>
                                 <li class="<?php echo get_quiz_subject_class($quiz['title']); ?>">
                                     <div class="quiz-info">
-                                        
-                                        <?php 
-                                            
+                                        <span class="quiz-icon">
+                                            <?php 
                                             $subject_class = get_quiz_subject_class($quiz['title']);
-                                            $icon = '';
-                                            
-                                            
-                                            if (strpos($subject_class, 'science') !== false) {
-                                                $icon = '<i class="fas fa-flask"></i>';
-                                            } elseif (strpos($subject_class, 'math') !== false) {
-                                                $icon = '<i class="fas fa-calculator"></i>';
-                                            } elseif (strpos($subject_class, 'art') !== false) {
-                                                $icon = '<i class="fas fa-palette"></i>';
-                                            } elseif (strpos($subject_class, 'history') !==false) {
-                                                $icon = '<i class="fas fa-book-open"></i>'; 
-                                            } else {
-                                                $icon = '<i class="fas fa-question-circle"></i>';
-                                            }
-                                        ?>
-                                        <span class="quiz-icon"><?php echo $icon; ?></span>
+                                            $icon_map = [
+                                                'science' => 'fas fa-flask',
+                                                'math' => 'fas fa-calculator', 
+                                                'art' => 'fas fa-palette',
+                                                'history' => 'fas fa-book-open'
+                                            ];
+                                            $icon = $icon_map[strpos($subject_class, key($icon_map)) !== false ? key($icon_map) : 'question-circle'] ?? 'fas fa-question-circle';
+                                            echo "<i class='$icon'></i>";
+                                            ?>
+                                        </span>
                                         <div class="quiz-details">
                                             <strong><?php echo e($quiz['title']); ?></strong>
                                             <p><?php echo e($quiz['description']); ?></p>
@@ -469,57 +282,45 @@ if (isset($_SESSION['quiz_submitted']) && $_SESSION['quiz_submitted']) {
                     <?php endif; ?>
                 </div>
                 
-                
-                
-                <div class="card printables-section" style="width: 400px;"> 
+                <div class="card">
                     <h3>📄 Study Printables</h3>
-                    <p style="margin-bottom: 15px; color: #555;">Review material for quizzes you have completed!</p>
+                    <p style="color: var(--text-2); margin-bottom: 1rem;">Review completed quizzes</p>
                     
                     <?php if (empty($completed_quizzes)): ?>
-                        <p style="padding: 10px; background-color: #ffebee; border: 1px solid #ffcdd2; border-radius: 5px; color: #c62828;">
-                            You haven't completed any quizzes yet. Finish a quiz to unlock study materials!
-                        </p>
+                        <div class="msg">Complete a quiz to unlock study materials!</div>
                     <?php else: ?>
-                        <ul class="printable-list" style="list-style: none; padding: 0;">
-                            <?php foreach ($completed_quizzes as $quiz): 
-                                $quiz_title_safe = htmlspecialchars($quiz['title']);
-                            ?>
-                                <li style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #eee;">
-                                    <span><i class="fas fa-file-alt" style="color: #00897b; margin-right: 8px;"></i> <?php echo e($quiz_title_safe); ?> - Study Guide</span>
-                                    
-                                    <a href="generate_printables.php?quiz_id=<?php echo e($quiz['id']); ?>" class="button success small" target="_blank" title="Opens new window. Use your browser's 'Print to PDF' feature to save."><i class="fas fa-download"></i> Download (PDF)</a>
+                        <ul style="list-style: none; padding: 0;">
+                            <?php foreach ($completed_quizzes as $quiz): ?>
+                                <li style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+                                    <span><i class="fas fa-file-pdf" style="color: var(--primary); margin-right: 0.5rem;"></i><?php echo e($quiz['title']); ?></span>
+                                    <a href="generate_printables.php?quiz_id=<?php echo e($quiz['id']); ?>" class="button success small" target="_blank">
+                                        <i class="fas fa-download"></i> PDF
+                                    </a>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
+                        <div class="msg" style="margin-top: 1rem; font-size: 0.875rem;">
+                            * Contains questions + answers for study
+                        </div>
                     <?php endif; ?>
-                    
-                    <div style="margin-top: 20px; padding: 10px; background-color: #fff3e0; border: 1px solid #ffcc80; border-radius: 5px; font-size: 0.9em; color: #e65100;">
-                        *Note: These files contain the questions and **correct answers** from the completed quiz.
-                    </div>
                 </div>
                 
-            
-                <div class="card ranking-section">
-                    <h3>🏆 Student Ranking (Top 10)</h3>
+                <div class="card">
+                    <h3>🏆 Leaderboard</h3>
                     <?php if (empty($ranking)): ?>
-                        <p>No completed quizzes yet to display a ranking.</p>
+                        <p>No results yet.</p>
                     <?php else: ?>
-                        <ul class="ranking-list">
-                        <?php $rank = 1; ?> 
-                        <?php foreach ($ranking as $entry): ?>
-                            <li>
-                                <div class="rank-number-container">
-                                    <span class="rank-number"><?php echo $rank; ?></span>
-                                </div>
-                                
-                                <span class="rank-user"><?php echo e($entry['name']); ?></span>
-                                
-                                <div class="rank-score-time">
-                                    <?php echo e($entry['score']); ?> Pts (<span class="subject-tag"><?php echo e($entry['quiz_title']); ?></span>)
-                                    <span class="time-stamp">Time: <?php echo format_duration($entry['duration_seconds']); ?></span>
-                                </div>
-                            </li>
-                        <?php $rank++; endforeach; ?>
+                        <ul class="ranking-list" style="list-style: none; padding: 0;">
+                            <?php $rank = 1; foreach ($ranking as $entry): ?>
+                                <li style="display: flex; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+                                    <div style="width: 2rem; font-weight: 700; font-size: 1.1rem; color: <?php echo $rank <= 3 ? '#facc15' : 'var(--text-2)'; ?>">
+                                        <?php echo $rank; ?>
+                                    </div>
+                                    <span style="flex: 1; font-weight: 500;"><?php echo e($entry['name']); ?></span>
+                                    <span style="font-weight: 600; color: var(--primary);"><?php echo e($entry['score']); ?> pts</span>
+                                    <small style="color: var(--text-2);"><?php echo format_duration($entry['duration_seconds']); ?></small>
+                                </li>
+                            <?php $rank++; endforeach; ?>
                         </ul>
                     <?php endif; ?>
                 </div>
@@ -548,5 +349,28 @@ if (isset($_SESSION['quiz_submitted']) && $_SESSION['quiz_submitted']) {
         }
     });
 </script>
+
+<?php include 'components/logout_modal.php'; ?>
+
+<script>
+function showLogoutModal() {
+  const modal = document.getElementById('logoutModal');
+  if (modal) modal.classList.add('show');
+}
+function closeLogoutModal() {
+  const modal = document.getElementById('logoutModal');
+  if (modal) modal.classList.remove('show');
+}
+document.addEventListener('click', e => {
+  const modal = document.getElementById('logoutModal');
+  if (e.target.id === 'logoutModal' && modal) closeLogoutModal();
+});
+const logoutBtn = document.querySelector('.logout-trigger');
+if (logoutBtn) logoutBtn.addEventListener('click', e => {
+  e.preventDefault();
+  showLogoutModal();
+});
+</script>
 </body>
 </html>
+

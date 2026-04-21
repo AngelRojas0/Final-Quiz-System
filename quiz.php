@@ -1,4 +1,4 @@
-<?php
+the<?php
 require_once 'config.php';
 
 // --- PHPMailer Setup ---
@@ -223,9 +223,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <title><?php echo e($quiz_data['title']); ?> - Quiz</title>
     <link rel="stylesheet" href="styles.css">
     
-    <script src="quiz_navigation.js" defer></script>
 </head>
-<body>
+<body class="student">
     <div class="header">
         <h2><?php echo e($quiz_data['title']); ?></h2>
         <a href="student_dashboard.php" class="button secondary">Back to Dashboard</a>

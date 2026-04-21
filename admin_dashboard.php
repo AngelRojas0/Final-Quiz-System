@@ -278,203 +278,9 @@ $kpis = calculate_kpis($all_quizzes, $monitoring_data);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Quiz System</title>
-    <link rel="stylesheet" href="styles.css"> 
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <style>
-        /* Minimal styles for KPI report to look good, assuming styles.css is basic */
-        .admin-view {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .kpi-report-card {
-            background-color: #f8f9fa;
-            border-left: 5px solid #007bff;
-        }
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .kpi-item {
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #ffffff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .kpi-value {
-            font-size: 2em;
-            font-weight: 700;
-            color: #007bff;
-            line-height: 1;
-        }
-        .kpi-label {
-            font-size: 0.9em;
-            color: #6c757d;
-            margin-top: 5px;
-        }
-        .kpi-success { color: #28a745; }
-        .kpi-warning { color: #ffc107; }
-        .kpi-danger { color: #dc3545; }
-        
-        /* Styles for Status tags */
-        .status-active, .status-inactive, .status-finished, .status-progress {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: bold;
-            color: white;
-            white-space: nowrap;
-        }
-        .status-active { background-color: #28a745; }
-        .status-inactive { background-color: #dc3545; }
-        .status-finished { background-color: #007bff; }
-        .status-progress { background-color: #ffc107; }
-        
-        .inline-form {
-            display: inline-block;
-        }
-
-        /* --- STYLES FOR NOTIFICATION FUNCTION --- */
-        .msg {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .msg.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .msg.warning {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-        }
-        .msg.danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        /* --- END NOTIFICATION STYLES --- */
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 1; 
-        }
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px; 
-        }
-
-       
-        .notification-container {
-            position: relative; 
-        }
-
-        /* Icon Button Styles */
-        .notification-icon-button {
-            position: relative;
-            font-size: 1.5em; 
-            color: #333; 
-            text-decoration: none;
-            padding: 5px;
-            transition: color 0.2s;
-        }
-        .notification-icon-button:hover {
-            color: #007bff;
-        }
-
-        /* Red Badge Styles */
-        .notification-badge {
-            position: absolute;
-            top: 0px; 
-            right: -5px; 
-            background-color: #dc3545; 
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.55em; 
-            font-weight: bold;
-            line-height: 1;
-            min-width: 18px;
-            text-align: center;
-            box-shadow: 0 0 0 2px white;
-        }
-
-        .notification-dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 40px; 
-            background-color: #f9f9f9;
-            min-width: 300px;
-            max-height: 400px;
-            overflow-y: auto;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 10;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-
-        .notification-dropdown-content h3 {
-            margin-top: 0;
-            font-size: 1.1em;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #eee;
-            color: #333;
-        }
-
-        .notification-dropdown-content .notification-item {
-            border-bottom: 1px dashed #e9e9e9;
-            padding: 10px 0;
-            font-size: 0.9em;
-        }
-        .notification-dropdown-content .notification-item:last-child {
-            border-bottom: none;
-        }
-        .notification-dropdown-content .no-announcements {
-            padding: 15px 0;
-            text-align: center;
-            color: #6c757d;
-        }
-
-        .mark-read-area {
-            text-align: center;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
-        }
-        .mark-all-read-btn {
-            display: inline-block;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 0.9em;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.2s;
-        }
-        .mark-all-read-btn:hover {
-            background-color: #e9ecef;
-        }
-
-        
-        .show {
-            display: block !important; 
-        }
-    </style>
 
     <script>
         function confirmDeleteAllResults() {
@@ -486,15 +292,13 @@ $kpis = calculate_kpis($all_quizzes, $monitoring_data);
         }
     </script>
 </head>
-<body>
+<body class="teacher">
     <div class="header">
         <h2>Admin Panel, Welcome <?php echo e($_SESSION['name']); ?></h2>
         <div class="header-actions">
-            
             <div class="notification-container">
-                <a href="#" id="notification-bell" class="notification-icon-button" title="Announcements">
+                <a href="#" id="notification-bell" class="notification-button" title="Announcements">
                     <i class="fas fa-bell"></i>
-                    
                     <?php if ($notification_count > 0): ?>
                         <span class="notification-badge"><?php echo $notification_count; ?></span>
                     <?php endif; ?>
@@ -517,9 +321,11 @@ $kpis = calculate_kpis($all_quizzes, $monitoring_data);
                     <?php endif; ?>
                 </div>
             </div>
-            <a href="logout.php" class="button danger">Logout</a>
+<a href="#" class="button danger logout-trigger" onclick="showLogoutModal(); return false;">Logout</a>
         </div>
     </div>
+    
+    <?php include 'components/logout_modal.php'; ?>
 
     <div class="container wide admin-view">
         
@@ -666,27 +472,38 @@ $kpis = calculate_kpis($all_quizzes, $monitoring_data);
         </div>
     </div>
     
-    <script>
-        // 1. Get the bell icon and the dropdown by their specific IDs
-        const bellIcon = document.getElementById('notification-bell');
-        const dropdown = document.getElementById('notification-dropdown');
-
-        // 2. Check if both elements exist before adding the listener
-        if (bellIcon && dropdown) {
-            // Toggle the 'show' class when the bell icon is clicked
-            bellIcon.addEventListener('click', function(event) {
-                event.preventDefault(); // Stop the link from navigating/reloading
-                dropdown.classList.toggle('show');
-            });
-        }
-
-        // 3. Close the dropdown if the user clicks outside of it
-        window.addEventListener('click', function(event) {
-            // Check if the dropdown exists, is currently open, and the click target is NOT inside the .notification-container
-            if (dropdown && dropdown.classList.contains('show') && !event.target.closest('.notification-container')) {
-                dropdown.classList.remove('show');
-            }
+<script>
+    // Notification dropdown
+    const bellIcon = document.getElementById('notification-bell');
+    const dropdown = document.getElementById('notification-dropdown');
+    if (bellIcon && dropdown) {
+        bellIcon.addEventListener('click', function(event) {
+            event.preventDefault();
+            dropdown.classList.toggle('show');
         });
-    </script>
+    }
+    window.addEventListener('click', function(event) {
+        if (dropdown && dropdown.classList.contains('show') && !event.target.closest('.notification-container')) {
+            dropdown.classList.remove('show');
+        }
+    });
+
+    // Logout modal
+    function showLogoutModal() {
+      const modal = document.getElementById('logoutModal');
+      if (modal) modal.classList.add('show');
+    }
+    function closeLogoutModal() {
+      const modal = document.getElementById('logoutModal');
+      if (modal) modal.classList.remove('show');
+    }
+    document.addEventListener('click', function(e) {
+      const modal = document.getElementById('logoutModal');
+      if (e.target.id === 'logoutModal' && modal) closeLogoutModal();
+    });
+</script>
+
+
 </body>
 </html>
+
